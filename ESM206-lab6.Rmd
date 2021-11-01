@@ -58,7 +58,52 @@ Therefore we do not have sufficient evidence and therefore retain (fail to rejec
 Median scores for group 1 (M = 14) and group 2 (M=12) did not differ significantly (Mann Whitney U test: U(df) = 86, p=0.28).
 
 
+## Linear Regression 
 
+Simple Linear regression (single dependent variable, a single independent variable)
+
+```{r}
+library(palmerpenguins)
+```
+
+```{r, include = TRUE}
+# Make an exploratory plot of penguin body mass (y-axis) versus flipper length (x-axis)
+
+ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+Find a linear regression model using ordinary least squares describing the relationship between flipper length and body mass for these penguins.
+
+3 pieces:
+
+- What type of model are we using?
+- What is the relationship to model (DV ~ IV(s))
+- Where is the data that's used to create this model?
+
+```{r}
+penguin_lm <- lm(body_mass_g ~ flipper_length_mm, data = penguins)
+```
+
+### broom package returns model outputs as tidy data frames 
+```{r}
+penguin_lm_tidy <- broom::tidy(penguin_lm)
+
+penguin_lm_tidy
+
+broom::glance(penguin_lm) # refer to wednesday's lecture - 3rd nov
+```
+
+How can I actually include my model equation in a report?
+
+```{r}
+extract_eq(model=penguin_lm, use_coefs = TRUE)
+```
+### plot on a linear model; helps 
+```{r}
+plot(penguin_lm)
+```
 
 
 
